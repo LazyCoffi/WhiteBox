@@ -1,0 +1,48 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+<!--使用application.properties内容-->
+<properties resource="application.properties"/>
+<!--targetRuntime的可选值还有“MyBatis3Simple”，可作简单的数据库操作使用-->
+<!--若要进行复杂操作，则使用“MyBatis3”-->
+<context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    <commentGenerator>
+        <property name="suppressAllComments" value="true"/>
+        <property name="suppressDate" value="true"/>
+    </commentGenerator>
+
+    <!--数据库连接信息-->
+    <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
+                    connectionURL="${spring.datasource.url}"
+                    userId="${spring.datasource.username}"
+                    password="${spring.datasource.password}">
+    </jdbcConnection>
+
+    <!-- 不要注释则开启 --> <!-- 注释产生配置 -->
+
+
+    <!--生成实体类路径-->
+    <javaModelGenerator targetPackage="com.cheng.whiteboxmodel.entitys"
+                        targetProject="src/main/java"/>
+    <!--生成Mapper配置文件路径-->
+    <sqlMapGenerator targetPackage="mapping"
+                     targetProject="src/main/resources"/>
+    <!--生成Mapper接口路径-->
+    <javaClientGenerator targetPackage="com.cheng.whiteboxmodel.mapper"
+                         targetProject="src/main/java"
+                         type="XMLMAPPER"/>
+
+    <!--数据库中的表，通过domainObjectName可以将表名对应的实体类修改为Customer-->
+    <table tableName="user_info" domainObjectName="UserInfo"
+           enableCountByExample="false" enableDeleteByExample="false"
+           enableSelectByExample="false" enableUpdateByExample="false">
+        <!--主键要根据表信息自行设定，此处为id-->
+        <generatedKey column="id" sqlStatement="JDBC"/>
+    </table>
+</context>
+
+</generatorConfiguration>
