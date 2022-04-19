@@ -1,14 +1,12 @@
 <template>
-  <LoginView></LoginView>
+  <RouterView></RouterView>
 </template>
 
 <script>
-import LoginView from "@/views/LoginView";
 
 export default {
   name: 'App',
   components: {
-    LoginView
   }
 }
 </script>

@@ -10,6 +10,7 @@ public class RestResponse {
     private final String msg;
     private final Object data;
     private final LocalDateTime timestamp = LocalDateTime.now();
+    private final String token;
 
     /* 常用静态字段 */
     public static final RestResponse OK = new RestResponse(HttpStatus.OK);
@@ -24,11 +25,27 @@ public class RestResponse {
         return new RestResponse(500, msg);
     }
 
+    public static RestResponse authTokenPass(String token) {
+        return new RestResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                null,
+                token);
+    }
+
     /* 构造方法 */
     public RestResponse(Integer code, String msg, Object data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
+        this.token = null;
+    }
+
+    public RestResponse(Integer code, String msg, Object data, String token) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+        this.token = token;
     }
 
     public RestResponse(Integer code, String msg) {
@@ -59,6 +76,8 @@ public class RestResponse {
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
+
+    public String getToken() { return token; }
 
     @Override
     public String toString() {

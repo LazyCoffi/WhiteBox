@@ -1,9 +1,11 @@
 package com.cheng.whiteboxmodel.mapper;
 
 import com.cheng.whiteboxmodel.entitys.UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Integer id);
 

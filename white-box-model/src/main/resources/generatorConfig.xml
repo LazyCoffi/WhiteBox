@@ -44,5 +44,4 @@
         <generatedKey column="id" sqlStatement="JDBC"/>
     </table>
 </context>
-
 </generatorConfiguration>
