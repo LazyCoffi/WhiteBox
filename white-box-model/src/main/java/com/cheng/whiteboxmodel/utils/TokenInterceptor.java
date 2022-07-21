@@ -36,15 +36,8 @@ public class TokenInterceptor implements HandlerInterceptor {
                 account = jedis.get(token);
             }
 
-            System.err.println(token);
-            System.err.println(account);
-
             if (account != null && account.length() > 1) {
                 resetTokenExpireTime(jedis, account, token);
-
-                // DEBUG
-                System.err.println("auth pass!");
-
                 return true;
             }
 
@@ -52,10 +45,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
             PrintWriter out = null;
             try {
-
-                // DEBUG
-                System.err.println("auth fail!");
-
                 response.setStatus(HttpStatus.ACCEPTED.value());
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
@@ -87,8 +76,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     }
 
     private void resetTokenExpireTime(Jedis jedis, String account, String token) {
-        Long tokenBirthTime = Long.valueOf(jedis.get(account + token));
-        Long diffTime = System.currentTimeMillis() - tokenBirthTime;
+        long tokenBirthTime = Long.parseLong(jedis.get(account + token));
+        long diffTime = System.currentTimeMillis() - tokenBirthTime;
 
         if (diffTime > ConstantKit.TOKEN_RESET_TIME) {
             jedis.expire(account, ConstantKit.TOKEN_EXPIRE_TIME);
